@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Context.js"></script>
+	<script type="text/javascript" src="../src/Cage/Assets.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset/Image.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Text.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Sprite.js"></script>
+</head>
+<body>
+<canvas id="viewport" width="200px" height="200px"></canvas>
+<script type="text/javascript">
+	var tester = new Cage.Tester(8, false);
+
+	function runTests() {
+		// Creating Cage.Context
+		var context = new Cage.Context({
+			width: 4,
+			height: 5
+		});
+
+		function showDetails0() {
+			console.log('context:', context);
+			console.log(' width: ' + context.getWidth());
+			console.log(' height: ' + context.getHeight());
+			console.log(' canvas: ' + context.getCanvas());
+			console.log(' context: ' + context.getContext());
+		}
+
+		var result = context.getWidth() == 4 && context.getHeight() == 5 && typeof(context.getContext()) == 'object';
+		tester.test('Testing creating new Cage.Canvas', result, showDetails0);
+
+		// Creating node
+		var node = new Cage.Node({
+			width: 100,
+			height: 100
+		});
+		node.setX(1);
+		node.setY(7);
+		node.update(1);
+		node.draw();
+		function showDetails1() {
+			console.log('node:', node);
+			console.log(' x: ' + node.getX());
+			console.log(' y: ' + node.getY());
+		}
+
+		result = node.getX() == 1 && node.getY() == 7;
+		tester.test('Testing creating new Cage.Node', result, showDetails1);
+
+		// Creating Sprite Node
+		var sprite = new Cage.Node.Sprite({
+			width: 20,
+			height: 20
+		});
+		sprite.setX(2);
+		sprite.setY(8);
+		sprite.setAsset(Cage.Assets.getImage('one'));
+		function showDetails2() {
+			console.log('sprite:', sprite);
+			console.log(' x: ' + sprite.getX());
+			console.log(' y: ' + sprite.getY());
+			console.log(' asset: ' + sprite.getAsset());
+		}
+
+		result = sprite.getX() == 2 && sprite.getY() == 8 && typeof(sprite.getAsset()) == 'object';
+		tester.test('Testing creating new Cage.Node.Sprite', result, showDetails2);
+
+		// Creating Text Node
+		var text = new Cage.Node.Text({
+			width: 20,
+			height: 20
+		});
+		text.setX(3);
+		text.setY(9);
+		text.setText('Test');
+		function showDetails3() {
+			console.log('text:', text);
+			console.log(' x: ' + text.getX());
+			console.log(' y: ' + text.getY());
+			console.log(' value: ' + text.getText());
+		}
+
+		result = text.getX() == 3 && text.getY() == 9 && text.getText() == 'Test';
+		tester.test('Testing creating new Cage.Node.Text', result, showDetails3);
+
+		// Adding childs to Node
+		node.addChild(sprite);
+		node.addChild(text);
+		function showDetails4() {
+			console.log('node:', node);
+			console.log(' childs: ' + node.getChilds());
+		}
+
+		result = node.getChilds().length == 2;
+		tester.test('Testing adding childs to Cage.Node', result, showDetails4);
+
+		// Update Cage.Node structure
+		node.update(2);
+		function showDetails5() {
+			console.log('node:', node);
+		}
+
+		tester.test('Testing update Cage.Node structure', result, showDetails5);
+
+		// Draw Cage.Node structure
+		node.draw();
+		function showDetails6() {
+			console.log('node:', node);
+		}
+
+		tester.test('Testing draw Cage.Node structure', result, showDetails6);
+
+		// Draw on screen
+		var viewport = document.getElementById('viewport');
+		var mainContext = viewport.getContext('2d');
+		mainContext.drawImage(node.getContext().getCanvas(), node.getX(), node.getY());
+		tester.test('Testing draw Cage.Node on screen', true);
+	}
+
+	// Load Assets
+	Cage.Assets.load({
+		images: {
+			one: 'Assets/desert.gif'
+		}
+	});
+	Cage.Assets.addListener('assets_complete', function() {
+		runTests();
+	});
+</script>
+</body>
+</html>
