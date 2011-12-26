@@ -16,26 +16,9 @@
 <body>
 <canvas id="viewport" width="200px" height="200px"></canvas>
 <script type="text/javascript">
-	var tester = new Cage.Tester(8, false);
+	var tester = new Cage.Tester(7, false);
 
 	function runTests() {
-		// Creating Cage.Context
-		var context = new Cage.Context({
-			width: 4,
-			height: 5
-		});
-
-		function showDetails0() {
-			console.log('context:', context);
-			console.log(' width: ' + context.getWidth());
-			console.log(' height: ' + context.getHeight());
-			console.log(' canvas: ' + context.getCanvas());
-			console.log(' context: ' + context.getContext());
-		}
-
-		var result = context.getWidth() == 4 && context.getHeight() == 5 && typeof(context.getContext()) == 'object';
-		tester.test('Testing creating new Cage.Canvas', result, showDetails0);
-
 		// Creating node
 		var node = new Cage.Node({
 			width: 100,
@@ -51,7 +34,7 @@
 			console.log(' y: ' + node.getY());
 		}
 
-		result = node.getX() == 1 && node.getY() == 7;
+		var result = node.getX() == 1 && node.getY() == 7;
 		tester.test('Testing creating new Cage.Node', result, showDetails1);
 
 		// Creating Sprite Node

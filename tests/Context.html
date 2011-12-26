@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Context.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	var tester = new Cage.Tester(1, false);
+
+	// Creating Cage.Context
+	var context = new Cage.Context({
+		width: 4,
+		height: 5
+	});
+
+	function showDetails() {
+		console.log('context:', context);
+		console.log(' width: ' + context.getWidth());
+		console.log(' height: ' + context.getHeight());
+		console.log(' canvas: ' + context.getCanvas());
+		console.log(' context: ' + context.getContext());
+	}
+
+	var result = context.getWidth() == 4 && context.getHeight() == 5 && typeof(context.getContext()) == 'object';
+	tester.test('Testing creating new Cage.Canvas', result, showDetails);
+
+</script>
+</body>
+</html>
