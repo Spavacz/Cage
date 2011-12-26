@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="../src/Cage.js"></script>
 	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
 	<script type="text/javascript" src="../src/Cage/Context.js"></script>
+	<script type="text/javascript" src="../src/Cage/Viewport.js"></script>
 	<script type="text/javascript" src="../src/Cage/Assets.js"></script>
 	<script type="text/javascript" src="../src/Cage/Asset.js"></script>
 	<script type="text/javascript" src="../src/Cage/Asset/Image.js"></script>
@@ -14,7 +15,7 @@
 	<script type="text/javascript" src="../src/Cage/Node/Sprite.js"></script>
 </head>
 <body>
-<canvas id="viewport" width="200px" height="200px"></canvas>
+<canvas id="viewport"></canvas>
 <script type="text/javascript">
 	var tester = new Cage.Tester(7, false);
 
@@ -101,9 +102,18 @@
 		tester.test('Testing draw Cage.Node structure', result, showDetails6);
 
 		// Draw on screen
-		var viewport = document.getElementById('viewport');
-		var mainContext = viewport.getContext('2d');
-		mainContext.drawImage(node.getContext().getCanvas(), node.getX(), node.getY());
+		var context = new Cage.Context({
+			canvas: document.getElementById('viewport'),
+			width: 200,
+			height: 200
+		});
+		var viewport = new Cage.Viewport({
+			context: context,
+			width: 200,
+			height: 200
+		});
+		viewport.addNode(node);
+		viewport.draw();
 		tester.test('Testing draw Cage.Node on screen', true);
 	}
 
