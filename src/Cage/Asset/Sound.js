@@ -4,7 +4,7 @@
  * Time: 15:51
  */
 
-Cage.Asset.Sound = (function(){
-	var parent = new Cage.Asset.Abstract;
-	this.extend(parent);
-});
+Cage.Asset.Sound = function(options) {
+	var that = new Cage.Asset(options);
+	return that;
+};

@@ -28,16 +28,12 @@ Cage.Assets = (function() {
 		return returnExtensions;
 	})();
 
-	function loadSound(file, id) {
-		var asset = {
+	function loadSound(src, id) {
+		var asset = new Cage.Asset.Sound({
 			id: id,
-			src: file,
-			type: 'sound'
-		};
-		var evt = document.createEvent('Events');
-		evt.initEvent('asset_start', true, true);
-		evt.asset = asset;
-		window.dispatchEvent(evt);
+			src: src
+		});
+		that.fireDataEvent('asset_start', {asset: asset});
 
 		if (audioFormats.length) {
 			var audio = document.createElement("audio");
@@ -45,11 +41,11 @@ Cage.Assets = (function() {
 			audio.addEventListener("canplaythrough", eventAssetLoad, false);
 			audio.addEventListener('error', eventAssetLoad, false);
 			var filename;
-			if (file.indexOf('.ogg') == -1 && file.indexOf('.mp3') == -1 && file.indexOf('.wav') == -1) {
-				filename = file + '.' + audioFormats[0];
+			if (src.indexOf('.ogg') == -1 && src.indexOf('.mp3') == -1 && src.indexOf('.wav') == -1) {
+				filename = src + '.' + audioFormats[0];
 			}
 			else {
-				filename = file;
+				filename = src;
 			}
 			audio.setAttribute("src", filename);
 			assets.sound[id] = audio;
