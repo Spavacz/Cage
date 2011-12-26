@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Assets.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset/Image.js"></script>
+	<script type="text/javascript">
+
+		var tester = new Cage.Tester(7, true);
+
+		// Testing event asset_start
+		Cage.Assets.addListener('asset_start', function(data) {
+			function showDetails() {
+				console.log('asset:', data.asset);
+				console.log(' id: ' + data.asset.getId());
+				console.log(' src: ' + data.asset.getSrc());
+			}
+			var result = typeof(data.asset.getSrc()) == 'string' && typeof(data.asset.getId()) == 'string';
+			tester.test('Testing event asset_start', result, showDetails);
+		});
+
+		// Testing event asset_end
+		Cage.Assets.addListener('asset_end', function(data) {
+			function showDetails() {
+				console.log('asset:', data.asset);
+				console.log('progress:', data.progress);
+			}
+			var result = typeof(data.asset) == 'object';
+			tester.test('Testing event asset_end', result, showDetails);
+		});
+
+		// Testing event assets_complete
+		Cage.Assets.addListener('assets_complete', function() {
+			tester.test('Testing event asset_complete', true);
+			onLoadTests();
+		});
+
+		function onLoadTests() {
+			// Testing Cage.Assets.getImage method
+			function showDetails() {
+				console.log('img', img);
+			}
+			var img = Cage.Assets.getImage('two');
+			var result = typeof(img) == 'object';
+			tester.test('Testing Cage.Assets.getImage', result, showDetails);
+		}
+
+		// Testing load method
+		Cage.Assets.load({
+			images: {
+				one: 'Assets/desert.gif',
+				two: 'Assets/Desert_background.jpg'
+			}
+		});
+		tester.test('Testing Cage.Assets.load method', true);
+	</script>
+</head>
+<body>
+
+</body>
+</html>
