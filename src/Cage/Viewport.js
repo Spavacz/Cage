@@ -13,6 +13,8 @@ Cage.Viewport = function(options) {
 	};
 	my.extend(options);
 
+	my.context = my.context || new Cage.Context({width: my.width, height: my.height});
+
 	var that = {
 		setWidth: function(width) {
 			my.width = width;
@@ -29,13 +31,16 @@ Cage.Viewport = function(options) {
 		addNode: function(node) {
 			my.nodes.push(node);
 		},
+		getNodes: function() {
+			return my.nodes;
+		},
 		draw: function() {
 			if(my.context) {
 				for(var i in my.nodes) {
 					if(my.nodes.hasOwnProperty(i)) {
 						var node = my.nodes[i];
 						node.draw();
-						this.context.getContext().drawImage(node.getContext().getCanvas(), node.getX(), node.getY());
+						my.context.getContext().drawImage(node.getContext().getCanvas(), node.getX(), node.getY(), node.getWidth(), node.getHeight());
 					}
 				}
 			}

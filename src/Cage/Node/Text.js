@@ -7,7 +7,7 @@
 Cage.Node.Text = function(options) {
 	var that = new Cage.Node(options);
 	var my = that.getMy();
-	my.text = my.text | null;
+	my.text = my.text || null;
 	var super_draw = that.superior('draw');
 
 	that.extend({

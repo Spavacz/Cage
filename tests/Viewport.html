@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Context.js"></script>
+	<script type="text/javascript" src="../src/Cage/Viewport.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Text.js"></script>
+</head>
+<body>
+<canvas id="viewport"></canvas>
+<script type="text/javascript">
+	var tester = new Cage.Tester(4, false);
+
+	var context = new Cage.Context({
+		canvas: document.getElementById('viewport'),
+		width: 200,
+		height: 200
+	});
+
+	// Creating Cage.Viewport
+	var viewport = new Cage.Viewport({
+		context: context,
+		width: 100,
+		height: 100
+	});
+
+	function showDetails0() {
+		console.log('viewport:', viewport);
+	}
+	var result = typeof(viewport) == 'object';
+	tester.test('Testing creating Cage.Viewport', result, showDetails0);
+
+	// Adding Cage.Node to Cage.Viewport
+	var node = new Cage.Node.Text({
+		width: 20,
+		height: 20,
+		x: 3,
+		y: 9,
+		text: 'Test'
+	});
+	viewport.addNode(node);
+	function showDetails1() {
+		console.log('viewport:', viewport);
+		console.log(' nodes: ' + viewport.getNodes());
+	}
+
+	result = viewport.getNodes().length == 1;
+	tester.test('Testing method Cage.Viewport.addNode', result, showDetails1);
+
+	// Update Cage.Viewport
+	viewport.update(1);
+	function showDetails2() {
+		console.log('viewport:', viewport);
+	}
+	tester.test('Testing method Cage.Viewport.update()', true, showDetails2);
+
+	// Draw Cage.Viewport
+	viewport.draw();
+	function showDetails3() {
+		console.log('viewport:', viewport);
+	}
+	tester.test('Testing method Cage.Viewport.draw()', true, showDetails3);
+</script>
+</body>
+</html>
