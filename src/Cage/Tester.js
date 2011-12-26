@@ -7,7 +7,7 @@
 Cage.Tester = function(testsCount, debug) {
 	var errorsCount = 0;
 
-	var onTestEnd = function(result) {
+	function onTestEnd(result) {
 		testsCount--;
 
 		if (testsCount < 0) {
@@ -20,7 +20,9 @@ Cage.Tester = function(testsCount, debug) {
 			console.warn('RESULT: Error');
 			errorsCount++;
 		}
+	}
 
+	function onAllTestsEnd() {
 		if (testsCount == 0) {
 			if (errorsCount > 0) {
 				console.error('Total errors: ' + errorsCount);
@@ -28,7 +30,7 @@ Cage.Tester = function(testsCount, debug) {
 				console.info('All Tests Passed');
 			}
 		}
-	};
+	}
 
 	return {
 		test: function(title, result, details) {
@@ -40,6 +42,7 @@ Cage.Tester = function(testsCount, debug) {
 			}
 			onTestEnd(result);
 			console.groupEnd();
+			onAllTestsEnd();
 		}
 	}
 };
