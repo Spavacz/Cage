@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Timer.js"></script>
+	<script type="text/javascript" src="../src/Cage/Loop.js"></script>
+	<script type="text/javascript" src="Assets/stats.js"></script>
+	<script type="text/javascript">
+
+		var tester = new Cage.Tester(4, false);
+		var updateStats = new Stats();
+		var drawStats = new Stats();
+		var updates = 0;
+		var draws = 0;
+
+		function update(deltaTime) {
+			updateStats.update();
+			updates++;
+			if (updates == 100) {
+				tester.test('Testing Cage.Loop.update', true, function() {
+					console.log('deltaTime', deltaTime);
+				});
+			}
+		}
+
+		function draw(interpolation) {
+			drawStats.update();
+			draws++;
+			if (draws == 100) {
+				tester.test('Testing Cage.Loop.draw', true, function() {
+					console.log('interpolation', interpolation);
+				});
+			}
+		}
+
+		// Create Cage.Loop
+		var loop = new Cage.Loop({
+			draw: draw,
+			update: update
+		});
+		var result = typeof(loop) == 'object';
+		tester.test('Testing creating Cage.Loop object', result, function() {
+			console.log('loop', loop);
+		});
+
+		// Cage.Loop.run method
+		loop.run();
+		tester.test('Testing Cage.Loop.run', true);
+	</script>
+</head>
+<body>
+
+<script type="text/javascript">
+	document.body.appendChild(document.createTextNode('Update:'));
+	document.body.appendChild(updateStats.domElement);
+	document.body.appendChild(document.createTextNode('Draw:'));
+	document.body.appendChild(drawStats.domElement);
+</script>
+</body>
+</html>
