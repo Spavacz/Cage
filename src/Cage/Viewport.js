@@ -18,18 +18,23 @@ Cage.Viewport = function(options) {
 	var that = {
 		setWidth: function(width) {
 			my.width = width;
+			my.context.setWidth(width);
+			return that;
 		},
 		getWidth: function() {
 			return my.width;
 		},
 		setHeight: function(height) {
 			my.height = height;
+			my.context.setHeight(height);
+			return that;
 		},
 		getHeight: function() {
 			return my.height;
 		},
 		addNode: function(node) {
 			my.nodes.push(node);
+			return that;
 		},
 		getNodes: function() {
 			return my.nodes;
@@ -44,6 +49,7 @@ Cage.Viewport = function(options) {
 					}
 				}
 			}
+			return that;
 		},
 		update: function(deltaTime) {
 			for(var i in my.nodes) {
@@ -51,9 +57,11 @@ Cage.Viewport = function(options) {
 					my.nodes[i].update(deltaTime);
 				}
 			}
+			return that;
 		},
 		setContext: function(context) {
 			my.context = context;
+			return that;
 		},
 		getContext: function() {
 			return my.context;

@@ -7,7 +7,6 @@
 Cage.Context = function(options) {
 	var my = {
 		canvas: null,
-		context: null,
 		height: 0,
 		width: 0
 	};
@@ -16,23 +15,26 @@ Cage.Context = function(options) {
 	my.canvas = my.canvas || document.createElement('canvas');
 	my.canvas.setAttribute('width', my.width);
 	my.canvas.setAttribute('height', my.height);
-	my.context = my.canvas.getContext('2d');
 
 	var that = {
 		setWidth: function(width) {
 			my.width = width;
+			my.canvas.setAttribute('width', my.width);
+			return that;
 		},
 		getWidth: function() {
 			return my.width;
 		},
 		setHeight: function(height) {
 			my.height = height;
+			my.canvas.setAttribute('height', my.height);
+			return that;
 		},
 		getHeight: function() {
 			return my.height;
 		},
 		getContext: function() {
-			return my.context;
+			return my.canvas.getContext('2d');
 		},
 		getCanvas: function() {
 			return my.canvas;

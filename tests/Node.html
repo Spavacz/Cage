@@ -7,9 +7,9 @@
 	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
 	<script type="text/javascript" src="../src/Cage/Context.js"></script>
 	<script type="text/javascript" src="../src/Cage/Viewport.js"></script>
-	<script type="text/javascript" src="../src/Cage/Assets.js"></script>
 	<script type="text/javascript" src="../src/Cage/Asset.js"></script>
 	<script type="text/javascript" src="../src/Cage/Asset/Image.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset/Manager.js"></script>
 	<script type="text/javascript" src="../src/Cage/Node.js"></script>
 	<script type="text/javascript" src="../src/Cage/Node/Text.js"></script>
 	<script type="text/javascript" src="../src/Cage/Node/Sprite.js"></script>
@@ -45,7 +45,7 @@
 		});
 		sprite.setX(2);
 		sprite.setY(8);
-		sprite.setAsset(Cage.Assets.getImage('one'));
+		sprite.setAsset(Cage.Asset.Manager.getImage('one'));
 		function showDetails2() {
 			console.log('sprite:', sprite);
 			console.log(' x: ' + sprite.getX());
@@ -74,16 +74,16 @@
 		result = text.getX() == 3 && text.getY() == 9 && text.getText() == 'Test';
 		tester.test('Testing creating new Cage.Node.Text', result, showDetails3);
 
-		// Adding childs to Node
+		// Adding childrens to Node
 		node.addChild(sprite);
 		node.addChild(text);
 		function showDetails4() {
 			console.log('node:', node);
-			console.log(' childs: ' + node.getChilds());
+			console.log('childrenss: ' + node.getChildrens());
 		}
 
-		result = node.getChilds().length == 2;
-		tester.test('Testing adding childs to Cage.Node', result, showDetails4);
+		result = node.getChildrens().length == 2;
+		tester.test('Testing adding childrens to Cage.Node', result, showDetails4);
 
 		// Update Cage.Node structure
 		node.update(2);
@@ -118,12 +118,12 @@
 	}
 
 	// Load Assets
-	Cage.Assets.load({
+	Cage.Asset.Manager.load({
 		images: {
 			one: 'Assets/desert.gif'
 		}
 	});
-	Cage.Assets.addListener('assets_complete', function() {
+	Cage.Asset.Manager.addListener('assets_complete', function() {
 		runTests();
 	});
 </script>

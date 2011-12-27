@@ -11,7 +11,7 @@ Cage.Node = function(options) {
 		y: 0,
 		width: 0,
 		height: 0,
-		childs: [],
+		childrens: [],
 		actions: []
 	};
 	my.extend(options);
@@ -24,47 +24,56 @@ Cage.Node = function(options) {
 		},
 		setX: function(value) {
 			my.x = value;
+			return that;
 		},
 		getX: function() {
 			return my.x;
 		},
 		setY: function(value) {
 			my.y = value;
+			return that;
 		},
 		getY: function() {
 			return my.y;
 		},
 		setWidth: function(width) {
 			my.width = width;
+			my.canvas.setWidth(width);
+			return that;
 		},
 		getWidth: function() {
 			return my.width;
 		},
 		setHeight: function(height) {
 			my.height = height;
+			my.canvas.setHeight(height);
+			return that;
 		},
 		getHeight: function() {
 			return my.height;
 		},
 		addChild: function(child) {
-			my.childs.push(child);
+			my.childrens.push(child);
+			return that;
 		},
-		getChilds: function() {
-			return my.childs;
+		getChildrens: function() {
+			return my.childrens;
 		},
 		addAction: function(action) {
 			my.actions.push(action);
+			return that;
 		},
 		draw: function() {
 			if (my.context) {
-				for (var i in my.childs) {
-					if (my.childs.hasOwnProperty(i)) {
-						var child = my.childs[i];
+				for (var i in my.childrens) {
+					if (my.childrens.hasOwnProperty(i)) {
+						var child = my.childrens[i];
 						child.draw();
 						my.context.getContext().drawImage(child.getContext().getCanvas(), child.getX(), child.getY());
 					}
 				}
 			}
+			return that;
 		},
 		update: function(deltaTime) {
 			for (var i in my.actions) {
@@ -72,14 +81,16 @@ Cage.Node = function(options) {
 					my.actions[i].update(deltaTime, my);
 				}
 			}
-			for (i in my.childs) {
-				if (my.childs.hasOwnProperty(i)) {
-					my.childs[i].update(deltaTime);
+			for (i in my.childrens) {
+				if (my.childrens.hasOwnProperty(i)) {
+					my.childrens[i].update(deltaTime);
 				}
 			}
+			return that;
 		},
 		setContext: function(context) {
 			my.context = context;
+			return that;
 		},
 		getContext: function() {
 			return my.context;

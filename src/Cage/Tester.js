@@ -32,7 +32,7 @@ Cage.Tester = function(testsCount, debug) {
 		}
 	}
 
-	return {
+	var that = {
 		test: function(title, result, details) {
 			console.group(title);
 			if (debug && typeof(details) == 'function') {
@@ -43,6 +43,8 @@ Cage.Tester = function(testsCount, debug) {
 			onTestEnd(result);
 			console.groupEnd();
 			onAllTestsEnd();
+			return that;
 		}
-	}
+	};
+	return that;
 };

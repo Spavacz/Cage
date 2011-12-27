@@ -11,18 +11,21 @@ Cage.Asset = function(options) {
 	};
 	my.extend(options);
 
-	return {
+	var that = {
 		setId: function(value) {
 			my.id = value;
+			return that;
 		},
 		getId: function() {
 			return my.id;
 		},
 		setSrc: function(value) {
 			my.src = value;
+			return that;
 		},
 		getSrc: function() {
 			return my.src;
 		}
 	};
+	return that;
 };

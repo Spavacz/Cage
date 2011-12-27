@@ -4,7 +4,7 @@
  * Time: 15:46
  */
 
-Cage.Assets = (function() {
+Cage.Asset.Manager = (function() {
 	var that = {},
 			assets = {
 				sound: {},
@@ -106,6 +106,7 @@ Cage.Assets = (function() {
 					}
 				}
 			}
+			return that;
 		},
 		getSound: function(id, url) {
 			if (url) {

@@ -12,6 +12,7 @@ Cage.Node.Sprite = function(options) {
 	that.extend({
 		setAsset: function(asset) {
 			my.asset = asset;
+			return that;
 		},
 		getAsset: function() {
 			return my.asset;
@@ -19,6 +20,7 @@ Cage.Node.Sprite = function(options) {
 		draw: function() {
 			my.context.getContext().drawImage(my.asset, 0, 0, my.width, my.height);
 			super_draw();
+			return that;
 		}
 	});
 	return that;

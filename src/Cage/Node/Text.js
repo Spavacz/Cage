@@ -13,6 +13,7 @@ Cage.Node.Text = function(options) {
 	that.extend({
 		setText: function(text) {
 			my.text = text;
+			return that;
 		},
 		getText: function() {
 			return my.text;
@@ -20,6 +21,7 @@ Cage.Node.Text = function(options) {
 		draw: function() {
 			my.context.getContext().fillText(my.text, my.x, my.y);
 			super_draw();
+			return that;
 		}
 	});
 	return that;
