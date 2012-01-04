@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../src/Core.js"></script>
+	<script type="text/javascript" src="../src/Cage.js"></script>
+	<script type="text/javascript" src="../src/Cage/Tester.js"></script>
+	<script type="text/javascript" src="../src/Cage/Context.js"></script>
+	<script type="text/javascript" src="../src/Cage/Viewport.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset/Image.js"></script>
+	<script type="text/javascript" src="../src/Cage/Asset/Manager.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Sprite.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Action.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Sprite/Animation.js"></script>
+	<script type="text/javascript" src="../src/Cage/Node/Sprite/Animation/Frame.js"></script>
+	<script type="text/javascript" src="../src/Cage/Timer.js"></script>
+	<script type="text/javascript" src="../src/Cage/Loop.js"></script>
+</head>
+<body>
+<canvas id="viewport"></canvas>
+<script type="text/javascript">
+	var tester = new Cage.Tester(3, false);
+
+	var context = new Cage.Context({
+		canvas: document.getElementById('viewport'),
+		width: 200,
+		height: 200
+	});
+	var viewport = new Cage.Viewport({
+		context: context,
+		width: 200,
+		height: 200
+	});
+
+	function runTests() {
+		// Creating Sprite Node
+		var sprite = new Cage.Node.Sprite({
+			width: 200,
+			height: 200,
+			x: 0,
+			y: 0,
+			asset: Cage.Asset.Manager.getImage('bat')
+		});
+		viewport.addNode(sprite);
+
+		// Create Cage.Node.Action.Animation
+		var animation = new Cage.Node.Sprite.Animation({
+			frames: [
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 0,
+					y: 0,
+					width: 66,
+					height: 66,
+					duration: .1
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 66,
+					y: 0,
+					width: 66,
+					height: 66,
+					duration: .1
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 132,
+					y: 0,
+					width: 66,
+					height: 66,
+					duration: .1
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 198,
+					y: 0,
+					width: 66,
+					height: 66,
+					duration: .1
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 0,
+					y: 66,
+					width: 66,
+					height: 66,
+					duration: .5
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 66,
+					y: 66,
+					width: 66,
+					height: 66,
+					duration: .1
+				}),
+				new Cage.Node.Sprite.Animation.Frame({
+					x: 132,
+					y: 66,
+					width: 66,
+					height: 66,
+					duration: .1
+				})
+			]
+		});
+
+		var result = typeof(animation) == 'object';
+		tester.test('Testing creating Cage.Node.Sprite.Animation object', result, function() {
+			console.log('animation', animation);
+		});
+
+		// Set sprite animation
+		sprite.setAnimation(animation);
+		result = typeof(sprite.getAnimation()) == 'object';
+		tester.test('Testing Cage.Node.Sprite.setAnimation method', result, function() {
+			console.log('animation', sprite.getAnimation());
+		});
+
+		function draw() {
+			viewport.draw();
+		}
+
+		var passTest = false;
+
+		function update(deltaTime) {
+			viewport.update(deltaTime);
+			if (!passTest && sprite.getAnimation().getMy().currentFrame == 7) {
+				result = sprite.getMy().source.x == 132 && sprite.getMy().source.y == 66;
+				tester.test('Testing Cage.Node.Sprite.Animation.update method', result, function() {
+					console.log('animation', sprite.getAnimation().getMy());
+				});
+				passTest = true;
+			}
+		}
+
+		var loop = new Cage.Loop({
+			draw: draw,
+			update: update
+		});
+		loop.run();
+	}
+
+	// Load Assets
+	Cage.Asset.Manager.load({
+		images: {
+			bat: 'Assets/bat.png'
+		}
+	});
+	Cage.Asset.Manager.addListener('assets_complete', function() {
+		runTests();
+	});
+</script>
+</body>
+</html>

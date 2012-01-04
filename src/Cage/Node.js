@@ -78,7 +78,7 @@ Cage.Node = function(options) {
 		update: function(deltaTime) {
 			for (var i in my.actions) {
 				if (my.actions.hasOwnProperty(i)) {
-					my.actions[i].update(deltaTime, my);
+					my.actions[i].update(deltaTime, that);
 				}
 			}
 			for (i in my.childrens) {
