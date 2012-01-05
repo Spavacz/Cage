@@ -41,12 +41,19 @@
 			height: 200,
 			x: 0,
 			y: 0,
+			source: {
+				width: 66,
+				height: 66,
+				x: 0,
+				y: 0
+			},
 			asset: Cage.Asset.Manager.getImage('bat')
 		});
 		viewport.addNode(sprite);
 
 		// Create Cage.Node.Action.Animation
 		var animation = new Cage.Node.Sprite.Animation({
+			type: 'Loop',
 			frames: [
 				new Cage.Node.Sprite.Animation.Frame({
 					x: 0,
@@ -81,7 +88,7 @@
 					y: 66,
 					width: 66,
 					height: 66,
-					duration: .5
+					duration: .1
 				}),
 				new Cage.Node.Sprite.Animation.Frame({
 					x: 66,
